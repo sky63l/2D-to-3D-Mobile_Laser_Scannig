@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/jetson/robot_ws/devel/setup.sh

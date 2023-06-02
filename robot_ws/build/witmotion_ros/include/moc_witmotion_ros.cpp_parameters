@@ -1,0 +1,14 @@
+-I/opt/ros/melodic/include
+-I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp
+-I/opt/ros/melodic/share/orocos_kdl/cmake/../../../include
+-I/usr/include
+-I/usr/include/eigen3
+-I/home/jetson/robot_ws/src/witmotion_ros/include
+-I/home/jetson/robot_ws/src/witmotion_ros/witmotion-uart-qt/include
+-DROS_BUILD_SHARED_LIBS=1
+-DROS_BUILD_SHARED_LIBS=1
+-DROS_PACKAGE_NAME="witmotion_ros"
+-DROSCONSOLE_BACKEND_LOG4CXX
+-o
+/home/jetson/robot_ws/build/witmotion_ros/include/moc_witmotion_ros.cpp
+/home/jetson/robot_ws/src/witmotion_ros/include/witmotion_ros.h

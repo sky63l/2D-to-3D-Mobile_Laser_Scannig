@@ -1,0 +1,38 @@
+<launch>
+
+ <!-- Transformation Configuration ... Setting Up the Relationships Between Coordinate Frames --> 
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="-0.035 0 0.15 0 0 0 base_link laser 30" />
+  <node pkg="tf" type="static_transform_publisher" name="imu_broadcaster" args="-0.09 0 0.06 0 0 0 base_link imu 30" />
+  <node pkg="tf" type="static_transform_publisher" name="camera_broadcaster" args="0.037 0 0.156 0 0 0 base_link camera_link 30" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_broadcaster" args="0 0 0 0 0 0 base_footprint base_link 30" />
+
+  <!-- odom to base_footprint transform will be provided by the robot_pose_ekf node -->
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 30" />
+
+ <!-- Wheel Encoder Tick Publisher and Base Controller Using Arduino -->  
+  <!-- motor_controller_diff_drive.ino is the Arduino sketch -->
+  <!-- Subscribe: /cmd_vel -->
+  <!-- Publish: /right_ticks, /left_ticks -->
+  <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+    <param name="port" value="/dev/ttyACM0"/>
+    <param name="baud" value="115200"/>
+  </node>
+
+  <!-- IMU Data Publisher Using the Witmotion -->
+  <!-- Publish: /imu -->
+    <rosparam command="load" file="$(find witmotion_ros)/config/config.yml" />
+    <node name="witmotion_imu" pkg="witmotion_ros"  type="witmotion_ros_node" output="screen"/>
+
+  <!-- Lidar Data Publisher Using RPLIDAR A1 M8 from Slamtec -->
+  <!-- Used for obstacle avoidance and can be used for mapping -->
+  <!-- Publish: /scan -->
+  <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+  <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+  <param name="serial_baudrate"     type="int"    value="115200"/><!--A1/A2 -->
+  <!--param name="serial_baudrate"     type="int"    value="256000"--><!--A3 -->
+  <param name="frame_id"            type="string" value="laser"/>
+  <param name="inverted"            type="bool"   value="false"/>
+  <param name="angle_compensate"    type="bool"   value="true"/>
+  </node>
+
+</launch>

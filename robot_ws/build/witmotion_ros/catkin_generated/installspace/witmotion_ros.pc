@@ -1,0 +1,8 @@
+prefix=/home/jetson/robot_ws/install
+
+Name: witmotion_ros
+Description: Description of witmotion_ros
+Version: 0.0.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: message_runtime tf2 sensor_msgs geometry_msgs std_msgs std_srvs nav_msgs tf2_geometry_msgs rosgraph_msgs
